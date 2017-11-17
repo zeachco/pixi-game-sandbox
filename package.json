@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "homepage": "https://zeachco.github.io/pixi-game-sandbox/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -20,8 +21,8 @@
   "bugs": {
     "url": "https://github.com/zeachco/pixi-game-sandbox/issues"
   },
-  "homepage": "https://github.com/zeachco/pixi-game-sandbox#readme",
   "devDependencies": {
+    "gh-pages": "^1.0.0",
     "react-scripts": "^1.0.17"
   },
   "dependencies": {
