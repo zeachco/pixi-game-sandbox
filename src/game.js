@@ -24,9 +24,15 @@ export class Game {
             .drawRect(10, 10, 50, 100)
             .endFill()
         ;
-
-        this.update();
         this.stage.addChild(this.rect);
+
+        this.car =  PIXI.Sprite.fromImage('/car.png');
+        this.car.scale.set(.25, .25);
+        this.car.anchor.set(.35 ,.5);
+        this.car.position.set(150, 100);
+        this.car.rotation = .4
+        this.stage.addChild(this.car);
+
         this.update();
     }
 
@@ -38,11 +44,11 @@ export class Game {
         const sc = 1 + Math.cos(now / 100) * .5
         this.rect.scale.set(sc, sc)
         this.renderer.render(this.stage);
-        this.animFrame = requestAnimationFrame(this.update);
+        this.animFrame = setTimeout(this.update, 1000 / 20);
     }
 
     destroy() {
-        cancelAnimationFrame(this.animFrame);
+        clearTimeout(this.animFrame);
         this.stage.removeChild(this.stage);
         this.div.removeChild(this.canvas);
     }
