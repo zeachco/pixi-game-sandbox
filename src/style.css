@@ -1,0 +1,18 @@
+body {
+    background:#222;
+    color: #fff;
+    display: flex;
+    height: 90vh;
+    justify-content: center;
+    align-items: center;
+}
+
+#gamescene {
+    margin: auto;
+}
+
+#gamescene canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
