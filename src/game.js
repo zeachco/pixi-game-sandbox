@@ -19,36 +19,71 @@ export class Game {
         this.div.appendChild(this.canvas);
 
         this.stage = new PIXI.Container();
+        this.container = new PIXI.Container();
+        this.stage.addChild(this.container);
+
         this.rect = new PIXI.Graphics()
             .beginFill(0x44ddff)
             .drawRect(10, 10, 50, 100)
             .endFill()
         ;
-        this.stage.addChild(this.rect);
+        
+        this.container.addChild(this.rect);
 
+
+        this.rect.interactive = true;
+        this.rect.buttonMode = true;
+        this.rect.addListener('click', () => {
+            console.error('click')
+        })
+
+        // rect 2 //
+
+        this.rect2 = new PIXI.Graphics()
+            .beginFill(0xff4400)
+            .drawRect(10, 10, 50, 100)
+            .endFill()
+        ;
+        this.rect.addChild(this.rect2);
+
+        this.rect2.interactive = true;
+        this.rect2.buttonMode = true;
+        this.rect2.addListener('click', () => {
+            console.error('click')
+        })
+        
         this.car =  PIXI.Sprite.fromImage('/car.png');
         this.car.scale.set(.25, .25);
         this.car.anchor.set(.35 ,.5);
         this.car.position.set(150, 100);
         this.car.rotation = .4
-        this.stage.addChild(this.car);
+        this.rect2.addChild(this.car);
 
         this.update();
     }
 
     update() {
         const now = Date.now();
-        this.rect.position.x = window.innerWidth / 2 + Math.sin(now / 200) * this.stage.width/2.1
-        this.rect.position.y = window.innerHeight / 2 + Math.cos(now / 200) * this.stage.height/2.1
-        this.rect.rotation = now / Math.PI / 200;
-        const sc = 1 + Math.cos(now / 100) * .5
+        const step = now / 2000;
+        const sc = 1 + Math.cos(now / 10000) * .5
+        this.rect.position.x = window.innerWidth / 2 + Math.sin(step) * this.stage.width / 2.1
+        this.rect.position.y = window.innerHeight / 2 + Math.cos(step) * this.stage.height / 2.1
+        this.rect.rotation = now / Math.PI / 2000;
         this.rect.scale.set(sc, sc)
+        this.rect2.position.x = Math.sin(step) * this.stage.width / 2.1
+        this.rect2.position.y = Math.cos(step) * this.stage.height / 2.1
+        this.rect2.rotation = now / Math.PI / 2000;
+        this.rect2.scale.set(sc, sc)
+        this.car.position.x = Math.sin(step) * this.stage.width / 2.1
+        this.car.position.y = Math.cos(step) * this.stage.height / 2.1
+        this.car.rotation = now / Math.PI / 2000;
+        // this.car.scale.set(sc, sc)
         this.renderer.render(this.stage);
-        this.animFrame = setTimeout(this.update, 1000 / 20);
+        this.animFrame = requestAnimationFrame(this.update);
     }
 
     destroy() {
-        clearTimeout(this.animFrame);
+        cancelAnimationFrame(this.animFrame);
         this.stage.removeChild(this.stage);
         this.div.removeChild(this.canvas);
     }
